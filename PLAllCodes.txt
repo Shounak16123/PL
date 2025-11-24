@@ -1,5 +1,5 @@
 Practical 1
-
+Arrays
 ---------------------------
 #include <iostream>
 #include <string>
@@ -172,7 +172,7 @@ int main() {
     return 0;
 }
 -----------------------------
-Practical 2
+Practical 2 2D arrays sparse matrix
 ------------------------------
 #include <iostream>
 using namespace std;
@@ -462,7 +462,7 @@ int main(){
 
 }
 ---------------------------------
-Practical 3
+Practical 3 Linked list
 ---------------------------------
 #include <bits/stdc++.h>
 #include <string>
@@ -922,7 +922,7 @@ int main()
     return 0;
 }
 --------------------------------
-Practical 4
+Practical 4  DOUBLYLINKEDLIST
 --------------------------------
 #include <bits/stdc++.h>
 using namespace std;
@@ -1075,7 +1075,7 @@ int main(){
     return 0;
 }
 --------------------------------
-Practical 5
+Practical 5  CIRCULARLINKEDLIST
 ---------------------------------
 #include <iostream>
 #include <string>
@@ -1226,7 +1226,7 @@ int main() {
     return 0;
 }
 -------------------------------------------
-Practical 6
+Practical 6  STACK
 -------------------------------------------
 
 
@@ -1434,7 +1434,7 @@ int main() {
 
 
 --------------------------------------------
-Practical 7
+Practical 7 RECURSION
 --------------------------------------------
 #include <bits/stdc++.h>
 using namespace std;
@@ -1532,7 +1532,7 @@ int main() {
 
 
 ------------------------------------
-Practical 8
+Practical 8 CIRCULARQUEUE
 ------------------------------------
 #include <iostream>
 using namespace std;
@@ -1681,7 +1681,7 @@ int main() {
 
 -------------------------------
 
-Practical 9
+Practical 9 DOUBLYENDEDQUEU
 
 --------------------------------
 
@@ -1836,7 +1836,7 @@ int main(){
 
 
 --------------------------------------
-Practical 10
+Practical 10  SEARCHINGANDSORTIN
 ----------------------------------------
 #include <bits/stdc++.h>
 using namespace std;
@@ -1949,11 +1949,158 @@ int main() {
 	
     return 0;
 }
+#include <iostream>
+#include <string>
+using namespace std;
+
+struct Student {
+    int roll;
+    string name;
+    double sgpa;
+    string dept;
+};
+
+const int MAX = 200;
+
+// Print one student record
+void printStudent(Student s) {
+    cout << s.roll << "  " << s.name << "  " << s.sgpa << "  " << s.dept << "\n";
+}
+
+// Print header
+void printHeader() {
+    cout << "Roll  Name  SGPA  Department\n";
+    cout << "----------------------------------\n";
+}
+
+// Partition for Quicksort (descending by SGPA)
+int partitionDesc(Student a[], int low, int high) {
+    double pivot = a[high].sgpa;
+    int i = low - 1;
+
+    for (int j = low; j < high; j++) {
+        if (a[j].sgpa > pivot) {          // No fabs / cmath used
+            i++;
+            Student temp = a[i];
+            a[i] = a[j];
+            a[j] = temp;
+        }
+    }
+    Student temp = a[i+1];
+    a[i+1] = a[high];
+    a[high] = temp;
+
+    return i + 1;
+}
+
+// Quicksort descending
+void quickSort(Student a[], int low, int high) {
+    if (low < high) {
+        int p = partitionDesc(a, low, high);
+        quickSort(a, low, p - 1);
+        quickSort(a, p + 1, high);
+    }
+}
+
+// Print top 10 students
+void printTop10(Student arr[], int n) {
+    Student temp[MAX];
+    for (int i = 0; i < n; i++) temp[i] = arr[i];
+
+    quickSort(temp, 0, n - 1);
+
+    cout << "\nTop 10 Toppers:\n";
+    printHeader();
+
+    int limit = (n < 10 ? n : 10);
+    for (int i = 0; i < limit; i++) {
+        printStudent(temp[i]);
+    }
+}
+
+// Linear search by SGPA
+void searchSGPA(Student arr[], int n, double key) {
+    int found = 0;
+
+    cout << "\nStudents with SGPA = " << key << ":\n";
+    printHeader();
+
+    for (int i = 0; i < n; i++) {
+        if (arr[i].sgpa == key) {   // Exact comparison (no cmath)
+            printStudent(arr[i]);
+            found = 1;
+        }
+    }
+
+    if (!found) {
+        cout << "No student found.\n";
+    }
+}
+
+int main() {
+
+    // Pre-filled DB with 18 student records
+    Student db[MAX] = {
+        {101, "Amit", 9.12, "CSE"},
+        {102, "Riya", 8.75, "ENTC"},
+        {103, "Sahil", 9.48, "CSE"},
+        {104, "Pooja", 8.50, "IT"},
+        {105, "Vikram", 9.48, "MECH"},
+        {106, "Neha", 8.95, "CSE"},
+        {107, "Karan", 7.80, "ENTC"},
+        {108, "Sneha", 9.00, "IT"},
+        {109, "Rohit", 8.30, "MECH"},
+        {110, "Priya", 9.20, "CSE"},
+        {111, "Aditya", 8.75, "ENTC"},
+        {112, "Mansi", 9.48, "IT"},
+        {113, "Tarun", 7.95, "MECH"},
+        {114, "Isha", 8.60, "CSE"},
+        {115, "Suyash", 9.05, "ENTC"},
+        {116, "Divya", 8.40, "IT"},
+        {117, "Manav", 8.95, "MECH"},
+        {118, "Alka", 9.48, "CSE"}
+    };
+    int n = 18;
+
+    int choice;
+    while (true) {
+        cout << "\n--- MENU ---\n";
+        cout << "1. View All Records\n";
+        cout << "2. Print Top 10 Toppers (Quicksort)\n";
+        cout << "3. Search Students by SGPA (Linear Search)\n";
+        cout << "4. Exit\n";
+        cout << "Enter choice: ";
+        cin >> choice;
+
+        if (choice == 1) {
+            printHeader();
+            for (int i = 0; i < n; i++) printStudent(db[i]);
+        }
+        else if (choice == 2) {
+            printTop10(db, n);
+        }
+        else if (choice == 3) {
+            double key;
+            cout << "Enter SGPA to search: ";
+            cin >> key;
+            searchSGPA(db, n, key);
+        }
+        else if (choice == 4) {
+            cout << "Exiting...\n";
+            break;
+        }
+        else {
+            cout << "Invalid choice.\n";
+        }
+    }
+
+    return 0;
+}
 
 
 ------------------------------
 
-Practical 11
+Practical 11 Hashing 
 
 ------------------------------
 
@@ -2232,3 +2379,4 @@ int main() {
     
     return 0;
 }
+
