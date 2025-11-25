@@ -1,0 +1,58 @@
+#include <GL/glut.h>
+#include <Windows.h>
+
+void display() {
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    glColor3f(1.0f, 0.0f, 0.0f);
+    glBegin(GL_QUADS);
+        glVertex2f(-0.75f, 0.25f);
+        glVertex2f(-0.25f, 0.25f);
+        glVertex2f(-0.25f, 0.75f);
+        glVertex2f(-0.75f, 0.75f);
+    glEnd();
+
+    glColor3f(0.0f, 1.0f, 0.0f);
+    glBegin(GL_QUADS);
+        glVertex2f(0.2f, 0.3f);
+        glVertex2f(0.8f, 0.3f);
+        glVertex2f(0.8f, 0.7f);
+        glVertex2f(0.2f, 0.7f);
+    glEnd();
+
+    glColor3f(0.0f, 0.0f, 1.0f);
+    glBegin(GL_TRIANGLES);
+        glVertex2f(-0.5f, -0.3f);
+        glVertex2f(-0.8f, -0.7f);
+        glVertex2f(-0.2f, -0.7f);
+    glEnd();
+
+    glColor3f(1.0f, 0.5f, 0.0f);
+    glBegin(GL_QUADS);
+        glVertex2f(0.3f, -0.5f);
+        glVertex2f(0.5f, -0.7f);
+        glVertex2f(0.7f, -0.5f);
+        glVertex2f(0.5f, -0.3f);
+    glEnd();
+
+    glColor3f(255.0f, 255.0f, 0.0f);
+    glBegin(GL_POLYGON);
+        glVertex2f(0.0f, 0.15f);
+        glVertex2f(-0.3f, 0.0f);
+        glVertex2f(-0.2f, -0.3f);
+        glVertex2f(0.2f, -0.3f);
+        glVertex2f(0.3f, 0.0f);
+    glEnd();
+
+    glFlush();
+}
+
+int main(int argc, char** argv) {
+    glutInit(&argc, argv);
+    glutCreateWindow("4 Shapes: Square, Rectangle, Triangle, Diamond, Pentagon");
+    glutInitWindowSize(800, 600);
+    glutInitWindowPosition(50, 50);
+    glutDisplayFunc(display);
+    glutMainLoop();
+    return 0;
+}

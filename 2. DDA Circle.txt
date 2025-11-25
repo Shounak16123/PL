@@ -1,0 +1,50 @@
+#include <GL/glut.h>
+#include <math.h>
+#include <stdio.h>
+
+float xc, yc, r;
+
+void drawCircleDDA() {
+    glClear(GL_COLOR_BUFFER_BIT);
+    glColor3f(0.0f, 1.0f, 1.0f);
+
+    glBegin(GL_POINTS);
+
+    float theta = 0.0;
+    float step = 0.01;
+
+    while (theta <= 2 * M_PI) {
+        float x = xc + r * cos(theta);
+        float y = yc + r * sin(theta);
+        glVertex2f(x, y);
+        theta += step;
+    }
+
+    glEnd();
+    glFlush();
+}
+
+void init() {
+    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluOrtho2D(-200, 200, -200, 200);
+}
+
+int main(int argc, char** argv) {
+    printf("Enter center (xc yc): ");
+    scanf("%f %f", &xc, &yc);
+    printf("Enter radius: ");
+    scanf("%f", &r);
+
+    glutInit(&argc, argv);
+    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
+    glutInitWindowSize(500, 500);
+    glutInitWindowPosition(100, 100);
+    glutCreateWindow("Circle Drawing using DDA in C");
+    init();
+    glutDisplayFunc(drawCircleDDA);
+    glutMainLoop();
+
+    return 0;
+}

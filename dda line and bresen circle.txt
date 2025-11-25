@@ -1,0 +1,96 @@
+#include <GL/glut.h>
+#include <cmath>
+
+void setPixel(int x, int y)
+{
+    glBegin(GL_POINTS);
+        glVertex2i(x, y);
+    glEnd();
+}
+
+void DDA_Line(int x0, int y0, int x1, int y1)
+{
+    int dx = x1 - x0;
+    int dy = y1 - y0;
+    int steps = abs(dx) > abs(dy) ? abs(dx) : abs(dy);
+    float xInc = dx / (float)steps;
+    float yInc = dy / (float)steps;
+    float x = x0;
+    float y = y0;
+
+    for (int i = 0; i <= steps; i++)
+    {
+        setPixel(round(x), round(y));
+        x += xInc;
+        y += yInc;
+    }
+}
+
+void circlePoints(int xc, int yc, int x, int y)
+{
+    setPixel(xc + x, yc + y);
+    setPixel(xc - x, yc + y);
+    setPixel(xc + x, yc - y);
+    setPixel(xc - x, yc - y);
+    setPixel(xc + y, yc + x);
+    setPixel(xc - y, yc + x);
+    setPixel(xc + y, yc - x);
+    setPixel(xc - y, yc - x);
+}
+
+void bresenhamCircle(int xc, int yc, int r)
+{
+    int x = 0;
+    int y = r;
+    int p = 3 - 2 * r;
+
+    while (x <= y)
+    {
+        circlePoints(xc, yc, x, y);
+
+        if (p < 0)
+            p += 4 * x + 6;
+        else
+        {
+            p += 4 * (x - y) + 10;
+            y--;
+        }
+        x++;
+    }
+}
+
+void display()
+{
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    glColor3f(1, 0, 0);
+    DDA_Line(20, 300, 30, 500);
+
+    glColor3f(0, 1, 0);
+    DDA_Line(15, 240, 67, 117);
+
+    glColor3f(0, 0, 1);
+    bresenhamCircle(200, 250, 100);
+
+    glColor3f(1, 0, 1);
+    bresenhamCircle(350, 350, 50);
+
+    glFlush();
+}
+
+void init()
+{
+    gluOrtho2D(0, 500, 0, 500);
+}
+
+int main(int argc, char** argv)
+{
+    glutInit(&argc, argv);
+    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
+    glutInitWindowSize(500, 500);
+    glutCreateWindow("DDA Line + Bresenham Circle (C++)");
+    init();
+    glutDisplayFunc(display);
+    glutMainLoop();
+    return 0;
+}

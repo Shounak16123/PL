@@ -1,0 +1,54 @@
+#include <GL/glut.h>
+#include <cmath>
+
+int windowWidth = 800;
+int windowHeight = 400;
+
+void drawCircle(int xc, int yc, int radius, float r, float g, float b) {
+    glColor3f(r, g, b);
+    glBegin(GL_LINE_LOOP);
+    int x, y;
+    float theta;
+    for (int i = 0; i <= 360; i++) {
+        theta = i * 3.14159 / 180;
+        x = xc + radius * cos(theta);
+        y = yc + radius * sin(theta);
+        glVertex2i(x, y);
+    }
+    glEnd();
+}
+
+void display() {
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    int radius = 50;
+    int y_top = 250;
+    int y_bottom = 200;
+    int x_spacing = 120;
+    int x_start = 200;
+
+    drawCircle(x_start, y_top, radius, 0, 0, 1);
+    drawCircle(x_start + x_spacing, y_top, radius, 0, 0, 0);
+    drawCircle(x_start + 2*x_spacing, y_top, radius, 1, 0, 0);
+    drawCircle(x_start + x_spacing/2, y_bottom, radius, 1, 1, 0);
+    drawCircle(x_start + 3*x_spacing/2, y_bottom, radius, 0, 1, 0);
+    glFlush();
+}
+
+void init() {
+    glClearColor(1, 1, 1, 1);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluOrtho2D(0, windowWidth, 0, windowHeight);
+}
+
+int main(int argc, char** argv) {
+    glutInit(&argc, argv);
+    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
+    glutInitWindowSize(windowWidth, windowHeight);
+    glutCreateWindow("Olympic Rings");
+    init();
+    glutDisplayFunc(display);
+    glutMainLoop();
+    return 0;
+}

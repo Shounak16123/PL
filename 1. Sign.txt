@@ -1,0 +1,81 @@
+#include <GL/glut.h>
+#include <Windows.h>
+
+void display() {
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    //PLUS
+    glColor3f(1.0f, 0.0f, 0.0f);
+    glBegin(GL_QUADS);
+        glVertex2f(-0.83f, 0.25f);
+        glVertex2f(-0.77f, 0.25f);
+        glVertex2f(-0.77f, -0.25f);
+        glVertex2f(-0.83f, -0.25f);
+    glEnd();
+
+    glBegin(GL_QUADS);
+        glVertex2f(-0.95f, -0.05f);
+        glVertex2f(-0.65f, -0.05f);
+        glVertex2f(-0.65f, 0.05f);
+        glVertex2f(-0.95f, 0.05f);
+    glEnd();
+
+    // MINUS
+    glColor3f(1.0f, 1.0f, 0.0f);
+    glBegin(GL_QUADS);
+        glVertex2f(-0.5f, -0.05f);
+        glVertex2f(-0.2f, -0.05f);
+        glVertex2f(-0.2f, 0.05f);
+        glVertex2f(-0.5f, 0.05f);
+    glEnd();
+
+    // Multi *
+    glColor3f(0.753f, 0.753f, 0.753f);
+    glBegin(GL_QUADS);
+        glVertex2f(0.5f, 0.25f);
+        glVertex2f(0.8f, -0.25f);
+        glVertex2f(0.9f, -0.25f);
+        glVertex2f(0.6f, 0.25f);
+    glEnd();
+
+    glBegin(GL_QUADS);
+        glVertex2f(0.8f, 0.25f);
+        glVertex2f(0.5f, -0.25f);
+        glVertex2f(0.6f, -0.25f);
+        glVertex2f(0.9f, 0.25f);
+    glEnd();
+
+    //DIVISION
+    glColor3f(0.0f, 1.0f, 1.0f);
+    glBegin(GL_QUADS);
+        glVertex2f(0.05f, -0.05f);
+        glVertex2f(0.36f, -0.05f);
+        glVertex2f(0.36f, 0.05f);
+        glVertex2f(0.05f, 0.05f);
+    glEnd();
+
+    glBegin(GL_QUADS);
+        glVertex2f(0.17f, 0.15f);
+        glVertex2f(0.24f, 0.15f);
+        glVertex2f(0.24f, 0.21f);
+        glVertex2f(0.17f, 0.21f);
+    glEnd();
+
+    glBegin(GL_QUADS);
+        glVertex2f(0.17f, -0.15f);
+        glVertex2f(0.24f, -0.15f);
+        glVertex2f(0.24f, -0.21f);
+        glVertex2f(0.17f, -0.21f);
+    glEnd();
+    glFlush();
+}
+
+int main(int argc, char** argv) {
+    glutInit(&argc, argv);
+    glutCreateWindow("Math Operators (+ - % *)");
+    glutInitWindowSize(600, 600);
+    glutInitWindowPosition(50, 50);
+    glutDisplayFunc(display);
+    glutMainLoop();
+    return 0;
+}

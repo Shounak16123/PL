@@ -1,0 +1,65 @@
+#include<Windows.h>
+#include<GL/glut.h>
+
+void display()
+{
+	glBegin(GL_QUADS);
+	glColor3f(0.54f,0.69f,0.79f);
+	glVertex2f(-0.3,0.0f);
+	glVertex2f(-0.3f,-0.7f);
+	glVertex2f(0.0f,-0.7f);
+	glVertex2f(0.0f,0.0f);
+	glEnd();
+
+	glBegin(GL_QUADS);
+	glColor3f(0.165f,0.42f,0.42f);
+	glVertex2f(0.0f,0.0f);
+	glVertex2f(0.0f,-0.7f);
+	glVertex2f(0.5f,-0.5f);
+	glVertex2f(0.5f,0.2f);
+	glEnd();
+
+	glBegin(GL_QUADS);
+	glColor3f(0.192f,0.192f,0.192f);
+	glVertex2f(-0.15f,0.4f);
+	glVertex2f(0.0f,0.0f);
+	glVertex2f(0.5f,0.2f);
+	glVertex2f(0.35f,0.6f);
+	glEnd();
+
+	glBegin(GL_QUADS);
+	glColor3f(1.0f,1.0f,1.0f);
+	glVertex2f(-0.2f,-0.3f);
+	glVertex2f(-0.2f,-0.7f);
+	glVertex2f(-0.1f,-0.7f);
+	glVertex2f(-0.1f,-0.3f);
+	glEnd();
+
+	glBegin(GL_QUADS);
+	glColor3f(1.0f,1.0f,1.0f);
+	glVertex2f(0.15f,-0.14f);
+	glVertex2f(0.15f,-0.44f);
+	glVertex2f(0.35f,-0.36f);
+	glVertex2f(0.35f,-0.06f);
+	glEnd();
+
+	glBegin(GL_TRIANGLES);
+	glColor3f(0.64,0.64f,0.64f);
+	glVertex2f(-0.3f,0.0f);
+	glVertex2f(0.0f,0.0f);
+	glVertex2f(-0.15f,0.4f);
+	glEnd();
+	glFlush();
+}
+
+int main(int argc, char **argv)
+{
+	glutInit(&argc, argv);
+	glutCreateWindow("3D home");
+	glutInitWindowSize(500,500);
+	glutInitWindowPosition(50,50);
+	glutDisplayFunc(display);
+	glutMainLoop();
+	return 0;
+}
+

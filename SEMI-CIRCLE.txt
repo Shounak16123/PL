@@ -1,0 +1,42 @@
+#include <GL/glut.h>
+#include <cmath>
+
+int xc=200, yc=200, r=100;
+
+void plotSemi(int x,int y){
+    glBegin(GL_POINTS);
+    glVertex2i(xc+x, yc+y);
+    glVertex2i(xc-x, yc+y);
+    glVertex2i(xc+y, yc+x);
+    glVertex2i(xc-y, yc+x);
+    glEnd();
+}
+
+void display(){
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    int x=0, y=r, p=1-r;
+
+    while(x<=y){
+        plotSemi(x,y);
+        x++;
+        if(p<0) p+=2*x+1;
+        else { y--; p+=2*(x-y)+1; }
+    }
+
+    glFlush();
+}
+
+void init(){
+    gluOrtho2D(0,500,0,500);
+}
+
+int main(int argc,char** argv){
+    glutInit(&argc,argv);
+    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
+    glutInitWindowSize(600,600);
+    glutCreateWindow("Semi Circle");
+    init();
+    glutDisplayFunc(display);
+    glutMainLoop();
+}

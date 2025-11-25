@@ -1,0 +1,72 @@
+#include <GL/glut.h>
+
+// triangle vertices
+GLfloat pts[3][3] = {
+    {0.0, 0.0, 0.0},
+    {1.0, 0.0, 0.0},
+    {0.5, 0.6, 0.7}
+};
+
+static float theta = 0.0;   // Rotation angle
+static int mode = 0;        // 0: about origin, 1: about fixed point
+
+void display() {
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glLoadIdentity();
+
+    glTranslatef(0.0, 0.0, -3.0);
+
+    if (mode == 0) {
+        glRotatef(theta, 1.0, 1.0, 1.0);
+    }
+    else {
+        // Rotate about (0.5, 0.3, 0.3)
+        glTranslatef(0.5, 0.3, 0.3);
+        glRotatef(theta, 1.0, 1.0, 1.0);
+        glTranslatef(-0.5, -0.3, -0.3);
+    }
+
+    glBegin(GL_TRIANGLES);
+        glColor3f(1.0, 0, 0); glVertex3fv(pts[0]);
+        glColor3f(0, 1.0, 0); glVertex3fv(pts[1]);
+        glColor3f(0, 0, 1.0); glVertex3fv(pts[2]);
+    glEnd();
+
+    glutSwapBuffers();
+}
+
+void spinTriangle() {
+    theta += 0.06;
+    if (theta > 360.0) theta -= 360.0;
+    glutPostRedisplay();
+}
+
+void mouse(int btn, int state, int x, int y) {
+    if (btn == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
+        mode = 0;    // About origin
+    if (btn == GLUT_RIGHT_BUTTON && state == GLUT_DOWN)
+        mode = 1;    // About fixed point
+}
+
+void myReshape(int w, int h) {
+    glViewport(0, 0, w, h);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluPerspective(60.0, (float)w / (float)h, 1.0, 10.0);
+    glMatrixMode(GL_MODELVIEW);
+}
+
+int main(int argc, char **argv) {
+    glutInit(&argc, argv);
+    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
+    glutInitWindowSize(400, 400);
+    glutCreateWindow("Rotating 3D Triangle: Origin & Fixed Point");
+    glutReshapeFunc(myReshape);
+    glutDisplayFunc(display);
+    glutMouseFunc(mouse);
+    glutIdleFunc(spinTriangle);
+    glEnable(GL_DEPTH_TEST);
+    glClearColor(1.0, 1.0, 1.0, 1.0);
+    glutMainLoop();
+    return 0;
+}
